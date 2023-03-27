@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Odd Duck</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- inline css -->
     <style>
 
@@ -14,6 +15,31 @@
     <div class="header">
         <h1>Odd Duck</h1>
     </div>
+
+    <div class="product-container">
+
+        <div class="product-box">
+          <h3 class="product-title">Image One</h3>
+          <div id="product-1"></div>
+        </div>
+    
+        <div class="product-box">
+          <h3 class="product-title">Image Two</h3>
+          <div id="product-2"></div>
+        </div>
+    
+        <div class="product-box">
+          <h3 class="product-title">Image Three</h3>
+          <div id="product-3"></div>
+        </div>
+    
+      </div>
+      <div>
+        <canvas id="results-chart"></canvas>
+      </div>
+        <button class="view-results-btn">View Results</button>
+      
+
     <script src="app.js"></script>
 </body>
 </html>

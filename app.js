@@ -1,4 +1,4 @@
-const images = ['bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulhu.jpg','dog-duck.jpg','dragon.jpg','pen.jpg','scissors.jpg','shark.jpg','sweep.png','tauntaun.jpg','unicorn.jpg','water-can.jpg','wine-glass.jpg']
+const images = ['./assets/bag.jpg','./assets/banana.jpg','./assets/bathroom.jpg','./assets/boots.jpg','./assets/breakfast.jpg','./assets/bubblegum.jpg','./assets/chair.jpg','./assets/cthulhu.jpg','./assets/dog-duck.jpg','./assets/dragon.jpg','./assets/pen.jpg','./assets/scissors.jpg','./assets/shark.jpg','./assets/sweep.png','./assets/tauntaun.jpg','./assets/unicorn.jpg','./assets/water-can.jpg','./assets/wine-glass.jpg']
 
 const imagesCount = {};
 
@@ -8,7 +8,7 @@ function getRandomElement(array) {
 
 function refreshImages() {
     const product1Image = getRandomElement(images);
-    product1Span.innerHTML = `<img class='img' src="images/${product1Image}">`;
+    product1Span.innerHTML = `<img class='img' src="${product1Image}">`;
     if (imagesCount[product1Image]) {
         imagesCount[product1Image]++;
     } else {
@@ -16,7 +16,7 @@ function refreshImages() {
     }
 
     const product2Image = getRandomElement(images);
-    product2Span.innerHTML = `<img class='img' src="images/${product2Image}">`;
+    product2Span.innerHTML = `<img class='img' src="${product2Image}">`;
     if (imagesCount[product2Image]) {
         imagesCount[product2Image]++;
     } else {
@@ -24,7 +24,7 @@ function refreshImages() {
     }
 
     const product3Image = getRandomElement(images);
-    product3Span.innerHTML = `<img class='img' src="images/${product3Image}">`;
+    product3Span.innerHTML = `<img class='img' src="${product3Image}">`;
     if (imagesCount[product3Image]) {
         imagesCount[product3Image]++;
     } else {
@@ -43,3 +43,37 @@ function refreshImages() {
     product1Span.addEventListener('click', refreshImages);
     product2Span.addEventListener('click', refreshImages);
     product3Span.addEventListener('click', refreshImages);
+
+    const viewResultsBtn = document.querySelector('.view-results-btn');
+viewResultsBtn.addEventListener('click', showResults);
+
+function showResults() {
+
+  const labels = Object.keys(imagesCount);
+  const data = Object.values(imagesCount);
+
+  const canvas = document.getElementById('results-chart');
+
+  const chart = new Chart(canvas, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Image Votes',
+        data: data,
+        backgroundColor: [
+            "#000000", "#111111", "#222222", "#333333", "#444444", "#555555", "#666666", "#777777", "#888888", "#999999", "#AAAAAA", "#BBBBBB", "#CCCCCC", "#DDDDDD", "#EEEEEE",
+
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      title: {
+        display: true,
+        text: 'Image Votes'
+      }
+    }
+  });
+}
