@@ -1,63 +1,54 @@
-const images = ['./assets/bag.jpg','./assets/banana.jpg','./assets/bathroom.jpg','./assets/boots.jpg','./assets/breakfast.jpg','./assets/bubblegum.jpg','./assets/chair.jpg','./assets/cthulhu.jpg','./assets/dog-duck.jpg','./assets/dragon.jpg','./assets/pen.jpg','./assets/scissors.jpg','./assets/shark.jpg','./assets/sweep.png','./assets/tauntaun.jpg','./assets/unicorn.jpg','./assets/water-can.jpg','./assets/wine-glass.jpg'];
+const images = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 
+//counts the images and identifies previous images
 const imagesCount = {};
 let previousImages = [];
 
+//this is for randomizing
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
+//refreshes images
 function refreshImages() {
-    let product1Image = getRandomElement(images);
-    while (previousImages.includes(product1Image)) {
-        product1Image = getRandomElement(images);
-    }
-    product1Span.innerHTML = `<img class='img' src="${product1Image}">`;
-    previousImages[0] = product1Image;
+  const product1Image = getRandomElement(images);
+  product1Span.innerHTML = `<img class='img' src="assets/${product1Image}">`;
+  if (imagesCount[product1Image]) {
+    imagesCount[product1Image]++;
+  } else {
+    imagesCount[product1Image] = 1;
+  }
 
-    let product2Image = getRandomElement(images);
-    while (previousImages.includes(product2Image)) {
-        product2Image = getRandomElement(images);
-    }
-    product2Span.innerHTML = `<img class='img' src="${product2Image}">`;
-    previousImages[1] = product2Image;
+  const product2Image = getRandomElement(images);
+  product2Span.innerHTML = `<img class='img' src="assets/${product2Image}">`;
+  if (imagesCount[product2Image]) {
+    imagesCount[product2Image]++;
+  } else {
+    imagesCount[product2Image] = 1;
+  }
 
-    let product3Image = getRandomElement(images);
-    while (previousImages.includes(product3Image)) {
-        product3Image = getRandomElement(images);
-    }
-    product3Span.innerHTML = `<img class='img' src="${product3Image}">`;
-    previousImages[2] = product3Image;
-
-    if (imagesCount[product1Image]) {
-        imagesCount[product1Image]++;
-    } else {
-        imagesCount[product1Image] = 1;
-    }
-
-    if (imagesCount[product2Image]) {
-        imagesCount[product2Image]++;
-    } else {
-        imagesCount[product2Image] = 1;
-    }
-
-    if (imagesCount[product3Image]) {
-        imagesCount[product3Image]++;
-    } else {
-        imagesCount[product3Image] = 1;
-    }
+  const product3Image = getRandomElement(images);
+  product3Span.innerHTML = `<img class='img' src="assets/${product3Image}">`;
+  if (imagesCount[product3Image]) {
+    imagesCount[product3Image]++;
+  } else {
+    imagesCount[product3Image] = 1;
+  }
 }
 
+//now they can go into my index
 const product1Span = document.getElementById('product-1');
 const product2Span = document.getElementById('product-2');
 const product3Span = document.getElementById('product-3');
 
+//now there will be a new set of images whenyou click
 refreshImages();
 
 product1Span.addEventListener('click', refreshImages);
 product2Span.addEventListener('click', refreshImages);
 product3Span.addEventListener('click', refreshImages);
 
+//view results listener
 const viewResultsBtn = document.querySelector('.view-results-btn');
 viewResultsBtn.addEventListener('click', showResults);
 
@@ -65,10 +56,11 @@ function showResults() {
   const labels = Object.keys(imagesCount);
   const data = Object.values(imagesCount);
 
+  //graph stuff
   const canvas = document.getElementById('results-chart');
 
   const chart = new Chart(canvas, {
-    type: 'pie',
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [{
