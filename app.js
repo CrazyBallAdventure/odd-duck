@@ -1,7 +1,6 @@
 const images = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 
 //counts the images and identifies previous images
-const imagesCount = {};
 let previousImages = [];
 
 //this is for randomizing
@@ -9,32 +8,39 @@ function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
+//Starts the count at zero
+const imagesCount = Object.fromEntries(images.map(image => [image, 0]));
+
 //refreshes images
 function refreshImages() {
-  const product1Image = getRandomElement(images);
-  product1Span.innerHTML = `<img class='img' src="assets/${product1Image}">`;
-  if (imagesCount[product1Image]) {
-    imagesCount[product1Image]++;
-  } else {
-    imagesCount[product1Image] = 1;
+  const availableImages = images.filter(image => !previousImages.includes(image));
+  const selectedImages = [];
+  
+  for (let i = 0; i < 3; i++) {
+    // Picks a random image from my available images pool
+    const imageIndex = Math.floor(Math.random() * availableImages.length);
+    const selectedImage = availableImages[imageIndex];
+    
+    // TAKES THAT IMAGE OUT OF THE AVAILABLE IMAGES POOL
+    availableImages.splice(imageIndex, 1);
+    
+    // Makes the image a product
+    const productElement = [product1Span, product2Span, product3Span][i];
+    productElement.innerHTML = `<img class='img' src="assets/${selectedImage}">`;
+    
+    // Adds the selected image to the selected images array
+    selectedImages.push(selectedImage);
   }
-
-  const product2Image = getRandomElement(images);
-  product2Span.innerHTML = `<img class='img' src="assets/${product2Image}">`;
-  if (imagesCount[product2Image]) {
-    imagesCount[product2Image]++;
-  } else {
-    imagesCount[product2Image] = 1;
-  }
-
-  const product3Image = getRandomElement(images);
-  product3Span.innerHTML = `<img class='img' src="assets/${product3Image}">`;
-  if (imagesCount[product3Image]) {
-    imagesCount[product3Image]++;
-  } else {
-    imagesCount[product3Image] = 1;
-  }
+  
+  // Updates the previous images array
+  previousImages = selectedImages;
+  
+  // Increment the count for the selected images
+  selectedImages.forEach(image => {
+    imagesCount[image]++;
+  });
 }
+
 
 //now they can go into my index
 const product1Span = document.getElementById('product-1');
